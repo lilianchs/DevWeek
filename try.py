@@ -70,35 +70,3 @@ new_body = json.loads(new_response['body'].read())
 new_edit_body = new_body['content'][0]['text']
 print(new_edit_body)
 
-
-new_prompt = "Give me github links to projects that are using the packages: " + new_edit_body
-
-
-new_kwargs = {
-    "modelId": "anthropic.claude-3-haiku-20240307-v1:0",
-    "contentType": "application/json",
-    "accept": "application/json",
-    "body": json.dumps({
-        "anthropic_version": "bedrock-2023-05-31",
-        "max_tokens": 1000,
-        "messages": [
-            {
-                "role": "user",
-                "content": [
-
-                    {
-                        "type": "text",
-                        "text": new_prompt
-                    }
-                ]
-            }
-        ]
-    })
-}
-
-new_response = bedrock_runtime.invoke_model(**new_kwargs)
-
-new_body = json.loads(new_response['body'].read())
-
-new_edit_body = new_body['content'][0]['text']
-print(new_edit_body)
