@@ -1,22 +1,19 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Searchbar from './searchbar';
+import Searchbar2 from './searchbar2';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Welcome to the Flyer Generation Website</h1>
+        <div style={{ marginBottom: '20px' }}>
+          <Searchbar />
+        </div>
+        <div style={{ marginBottom: '20px' }}>
+          <Searchbar2 />
+        </div>
       </header>
     </div>
   );
