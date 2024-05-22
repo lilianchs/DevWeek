@@ -1,6 +1,24 @@
 import boto3
 import json
 import re
+import ldclient
+from ldclient import Context
+from ldclient.config import Config
+import os
+
+
+sdk_key = os.getenv("LAUNCHDARKLY_SDK_KEY")
+context = \
+    Context.builder('example-user-key').kind('user').name('Sandy').build()
+feature_flag_key = "lengthy-vs-brief"
+flag_value = ldclient.get().variation(feature_flag_key, context, False)
+if flag_value:
+    # application code to show the feature
+    print(1)
+else:
+    # the code to run if the feature is off
+    print(2)
+print(flag_value)
 
 bedrock_runtime = boto3.client('bedrock-runtime', region_name='us-west-2')
 
@@ -33,11 +51,12 @@ def getResult(prompt):
     body = json.loads(response['body'].read())
 
     edit_body = body['content'][0]['text']
-
+    print(edit_body)
     matches = re.findall(r'\*\*(.*?)\*\*', edit_body)
     new_match = ""
     for match in matches:
         new_match = new_match + ", " + match
+
     new_prompt = "Give me the github repo link to all those packages: " + new_match
 
     new_kwargs = {
@@ -69,3 +88,6 @@ def getResult(prompt):
     new_edit_body = new_body['content'][0]['text']
 
     return new_edit_body
+
+
+print(getResult("I need an NLP model that detect user sentiments"))
